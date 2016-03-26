@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VideoPlayer</string>
+    <string name="first_activity">Courses页面</string>
+    <string name="second_activity">Community页面</string>
+    <string name="third_activity">Live页面</string>
+    <string name="fourth_activity">MyInfo页面</string>
+    <string name="categories">分类</string>
+    <string name="back_live">返回</string>
+    <string name="video_description">视频描述</string>
+    <string name="video_name">视频名</string>
+    <string name="video_length">视频长度</string>
+    <string name="video_author">作者</string>
+    <string name="video_layout_loading">加载中</string>
+    <string name="take_note">语音笔记</string>
+    <string name="categories_activity">Categories界面</string>
+    <string name="search_activity">Search界面</string>
+    <string name="all_courses">全部课程</string>
+    <string name="search_hint">搜索课程</string>
+    <string name="htmlcss">HTML/CSS</string>
+    <string name="jquery">JQuery</string>
+    <string name="javascript">JavaScript</string>
+    <string name="html5">Html5</string>
+    <string name="nodejs">Node.js</string>
+    <string name="webapp">WebApp</string>
+    <string name="webfrontdevelop">前端开发</string>
+    <string name="c">C</string>
+    <string name="cpp">C++</string>
+    <string name="php">PHP</string>
+    <string name="java">JAVA</string>
+    <string name="go">GO</string>
+    <string name="csharp">C#</string>
+    <string name="webbehinddevelop">后端开发</string>
+</resources>

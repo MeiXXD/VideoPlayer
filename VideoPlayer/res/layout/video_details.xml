@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@android:color/holo_red_light">
+            <ImageButton android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/back_live"
+                         android:src="@drawable/icon"
+                         android:layout_marginLeft="10dp"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/back_live"
+                      android:textSize="30dp"
+                      android:textColor="@android:color/white"
+                      android:gravity="center"
+                      android:layout_toRightOf="@id/back_live"
+                      android:layout_alignBottom="@id/back_live"
+                      android:layout_marginLeft="15dp"
+                      android:layout_marginBottom="20dp"/>
+            <ImageButton android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/mark"
+                         android:src="@drawable/icon"
+                         android:layout_alignParentRight="true"
+                         android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+            <com.android.volley.toolbox.NetworkImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/video_img"
+                    android:src="@drawable/icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"/>
+            <ImageButton android:layout_width="150dp"
+                         android:layout_height="40dp"
+                         android:id="@+id/video_play"
+                         android:src="@drawable/icon"
+                         android:layout_alignLeft="@id/video_img"
+                         android:layout_below="@id/video_img"
+                         android:layout_alignRight="@id/video_img"
+                         android:layout_marginTop="5dp"/>
+            <TextView
+                    android:id="@+id/video_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/video_name"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/video_img"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignTop="@id/video_img"/>
+            <TextView
+                    android:id="@+id/video_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/video_author"
+                    android:layout_below="@id/video_name"
+                    android:layout_alignLeft="@id/video_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignRight="@id/video_name"/>
+            <TextView
+                    android:id="@+id/video_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/video_length"
+                    android:layout_below="@id/video_author"
+                    android:layout_alignLeft="@id/video_author"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignRight="@id/video_author"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/video_description"
+                    android:layout_below="@id/video_length"
+                    android:layout_alignLeft="@id/video_length"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignRight="@id/video_length"
+                    android:layout_alignBottom="@id/video_play"/>
+        </RelativeLayout>
+
+        <TabHost
+                android:id="@android:id/tabhost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                    <TabWidget
+                            android:id="@android:id/tabs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top">
+                    </TabWidget>
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="edu.iss.videoplayer"
+          android:versionCode="1"
+          android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="19"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--播放视频权限申请-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!--录音权限申请-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <application android:name="activity.listview.app.AppController"
+                 android:allowBackup="true"
+                 android:icon="@drawable/icon"
+                 android:label="@string/app_name"
+                 android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        <activity
+                android:name="io.vov.vitamio.activity.InitActivity"
+                android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+                android:launchMode="singleTop"
+                android:theme="@android:style/Theme.NoTitleBar"
+                android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <service android:enabled="true" android:name=".utils.NetworkStateService"/>
+
+        <activity android:name=".MainActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".Courses"></activity>
+        <activity android:name=".Community"></activity>
+        <activity android:name=".Live"></activity>
+        <activity android:name=".MyInfo"></activity>
+        <activity android:name=".Categories"></activity>
+        <activity android:name=".Search"></activity>
+        <activity android:name=".Comments"></activity>
+        <activity android:name=".Notes"></activity>
+        <activity android:name=".VideoDetails"></activity>
+        <activity android:name=".NoteRecorder"
+                  android:theme="@style/Dialogstyle">
+        </activity>
+        <activity android:name=".VideoPlayer"
+                  android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+
+        <meta-data
+                android:name="UMENG_APPKEY"
+                android:value="563c244467e58e53e60005cc">
+        </meta-data>
+        <meta-data
+                android:name="UMENG_CHANNEL"
+                android:value="demo">
+        </meta-data>
+    </application>
+</manifest>
