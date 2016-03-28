@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import org.json.JSONException;
 
 import java.io.UnsupportedEncodingException;
 
@@ -57,7 +58,11 @@ public class StringRequest extends Request<String> {
 
     @Override
     protected void deliverResponse(String response) {
-        mListener.onResponse(response);
+        try {
+            mListener.onResponse(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -68,6 +73,6 @@ public class StringRequest extends Request<String> {
         } catch (UnsupportedEncodingException e) {
             parsed = new String(response.data);
         }
-        return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
+        return Response.success(parsed, HttpHeaderParser.parseIgnoreCacheHeaders(response));
     }
 }

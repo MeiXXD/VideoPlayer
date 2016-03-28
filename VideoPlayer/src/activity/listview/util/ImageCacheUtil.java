@@ -81,7 +81,7 @@ public class ImageCacheUtil implements ImageCache {
     public Bitmap getBitmap(String url) {
         if (mLruCache.get(url) != null) {
             // 从LruCache缓存中取
-            Log.i(TAG, "从LruCahce获取");
+            Log.i(">>>>>", "从LruCahce获取");
             return mLruCache.get(url);
         } else {
             String key = MD5Utils.md5(url);
@@ -94,7 +94,7 @@ public class ImageCacheUtil implements ImageCache {
                         bitmap = BitmapFactory.decodeStream(snapshot.getInputStream(0));
                         // 存入LruCache缓存
                         mLruCache.put(url, bitmap);
-                        Log.i(TAG, "从DiskLruCahce获取");
+                        Log.i(">>>>>", "从DiskLruCahce获取");
                     }
                     return bitmap;
                 }

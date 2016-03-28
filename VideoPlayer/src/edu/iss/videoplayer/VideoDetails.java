@@ -3,12 +3,10 @@ package edu.iss.videoplayer;
 import activity.listview.app.AppController;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import roboguice.activity.RoboTabActivity;
@@ -25,6 +23,7 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.video_details)
 public class VideoDetails extends RoboTabActivity {
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    private String playurl;
     private TabHost tabHost;
     @InjectView(R.id.back_live)
     private ImageButton backlive;
@@ -40,7 +39,7 @@ public class VideoDetails extends RoboTabActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String imgurl = intent.getStringExtra("imgurl");
-        Log.e(">>>>>>", imgurl);
+        playurl = intent.getStringExtra("link");
         videoimg.setImageUrl(imgurl, imageLoader);
         tabHost = getTabHost();
         tabHost.addTab(tabHost.newTabSpec("comments").setIndicator("评论").setContent(new Intent(this, Comments.class)));
@@ -91,12 +90,9 @@ public class VideoDetails extends RoboTabActivity {
         @Override
         public void onClick(View v) {
             // TODO: 16/3/26 视频播放入口
-            // 测试
-            Toast.makeText(VideoDetails.this, "播放视频啦", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setClass(VideoDetails.this, VideoPlayer.class);
-            //intent.putExtra("Path", Environment.getExternalStorageDirectory() + path);
-            intent.putExtra("Path", "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
+            intent.putExtra("Path", playurl);
             startActivity(intent);
         }
     }

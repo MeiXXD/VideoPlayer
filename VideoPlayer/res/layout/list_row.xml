@@ -23,34 +23,24 @@
             android:textSize="@dimen/title"
             android:textStyle="bold"/>
 
-    <!-- 评分 -->
+    <!-- 播放次数 -->
     <TextView
-            android:id="@+id/rating"
+            android:id="@+id/crt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_marginTop="1dip"
             android:layout_toRightOf="@+id/thumbnail"
             android:textSize="@dimen/rating"/>
-    <!-- 类别 -->
+    <!-- 更新章节 -->
     <TextView
-            android:id="@+id/genre"
+            android:id="@+id/update_course"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rating"
+            android:layout_below="@id/crt"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/thumbnail"
             android:textColor="@color/genre"
             android:textSize="@dimen/genre"/>
-
-    <!-- 年份 -->
-    <TextView
-            android:id="@+id/releaseYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/year"
-            android:textSize="@dimen/year"/>
 
 </RelativeLayout>

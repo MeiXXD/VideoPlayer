@@ -16,6 +16,7 @@
     <string name="categories_activity">Categories界面</string>
     <string name="search_activity">Search界面</string>
     <string name="all_courses">全部课程</string>
+    <string name="courses_list">课程列表</string>
     <string name="search_hint">搜索课程</string>
     <string name="htmlcss">HTML/CSS</string>
     <string name="jquery">JQuery</string>

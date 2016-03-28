@@ -38,7 +38,12 @@
                 android:layout_height="200dp"
                 android:layout_margin="10dp"
         />
-
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/courses_list"
+                android:textSize="12dp"
+                android:gravity="center"/>
         <com.handmark.pulltorefresh.library.PullToRefreshListView
                 android:id="@+id/list"
                 android:layout_width="fill_parent"
