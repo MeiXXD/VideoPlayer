@@ -48,9 +48,6 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
     private static final int NETWORK_MOBILE = 1;
     private static final int NETWORK_WIFI = 2;
     private static final int NO_NETWORK = 0;
-    //刷新方式
-    private static final int PULLDOWNTOREFRESH = 1;
-    private static final int PULLUPTOREFRESH = 2;
     // 用来打Log日志的TAG
     private static final String TAG = MainActivity.class.getSimpleName();
     // JSON地址
@@ -108,7 +105,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             FlashViewVideo video = new FlashViewVideo();
-                            video.setImage(jsonObject.getString("image"));
+                            video.setImage(Constants.SERVER + jsonObject.getString("image"));
                             video.setLink(jsonObject.getString("link"));
                             int index = Integer.valueOf(jsonObject.getString("image_sort"));
                             imageUrls.add(index - 1, Constants.SERVER + jsonObject.getString("image"));
@@ -135,7 +132,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             FlashViewVideo video = new FlashViewVideo();
-                            video.setImage(jsonObject.getString("image"));
+                            video.setImage(Constants.SERVER + jsonObject.getString("image"));
                             int index = Integer.valueOf(jsonObject.getString("image_sort"));
                             imageUrls.add(index - 1, Constants.SERVER + jsonObject.getString("image"));
                             flashViewVideoList.add(index - 1, video);
@@ -205,14 +202,24 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
     private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(getApplicationContext(), "你的点击的是第" + position + "个item", Toast.LENGTH_SHORT).show();
+            Video temp = videoList.get(position - 1);
+            Intent intent = new Intent();
+            intent.setClass(Courses.this, VideoDetails.class);
+            intent.putExtra("imgurl", temp.getThumbnailUrl());
+            intent.putExtra("link", temp.getPlayUrl());
+            startActivity(intent);
         }
     }
 
     private class FlashViewPageClickListener implements FlashViewListener {
         @Override
         public void onClick(int position) {
-            Toast.makeText(getApplicationContext(), "你的点击的是第" + (position + 1) + "张图片", Toast.LENGTH_SHORT).show();
+            FlashViewVideo flashViewVideo = flashViewVideoList.get(position);
+            Intent intent = new Intent();
+            intent.setClass(Courses.this, VideoDetails.class);
+            intent.putExtra("imgurl", flashViewVideo.getImage());
+            intent.putExtra("link", flashViewVideo.getLink());
+            startActivity(intent);
         }
     }
 

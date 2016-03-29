@@ -41,9 +41,6 @@ public class Live extends RoboActivity implements NetworkStateService.NetEventHa
     private static final int NETWORK_MOBILE = 1;
     private static final int NETWORK_WIFI = 2;
     private static final int NO_NETWORK = 0;
-    //刷新方式
-    private static final int PULLDOWNTOREFRESH = 1;
-    private static final int PULLUPTOREFRESH = 2;
     // 用来打Log日志的TAG
     private static final String TAG = MainActivity.class.getSimpleName();
     // JSON地址
