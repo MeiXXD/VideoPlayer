@@ -8,6 +8,8 @@ package activity.listview.model;
  * Description: Video实体类
  */
 public class Video {
+    //id
+    private String id;
     //title=标题， thumbnailUrl=图片地址
     private String title, thumbnailUrl;
     //播放地址
@@ -17,7 +19,8 @@ public class Video {
     //更新章节
     private String update_course;
 
-    public Video(String title, String thumbnailUrl, String playUrl, String crt, String update_course) {
+    public Video(String id, String title, String thumbnailUrl, String playUrl, String crt, String update_course) {
+        this.id = id;
         this.title = title;
         this.thumbnailUrl = thumbnailUrl;
         this.playUrl = playUrl;
@@ -26,6 +29,14 @@ public class Video {
     }
 
     public Video() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

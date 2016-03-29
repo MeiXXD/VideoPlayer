@@ -8,8 +8,26 @@ package activity.flashview;
  * Description: 轮播实体类
  */
 public class FlashViewVideo {
+    private String id;
     private String link;
     private String image;
+
+    public FlashViewVideo() {
+    }
+
+    public FlashViewVideo(String id, String link, String image) {
+        this.id = id;
+        this.link = link;
+        this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getLink() {
         return link;

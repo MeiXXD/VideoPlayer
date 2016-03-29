@@ -48,8 +48,8 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
     private View mLoadingView;
     @InjectExtra("Path")
     private String mPath;
-    //    @InjectExtra("StartPosition")
-//    private long mStartPosition;
+    @InjectExtra("StartPosition")
+    private String mStartPosition;
     private
     @Inject
     AudioManager mAudioManager;
@@ -117,16 +117,15 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
             mVideoView.setVideoPath(mPath);
         }
 
-//        //判断是否从头开始播放
-//        if (0 != mStartPosition) {
-//            mVideoView.seekTo(mStartPosition);
-//            mVideoView.requestFocus();
-//        } else {
-//            mVideoView.requestFocus();
-//            startPlayer();
-//        }
-        mVideoView.requestFocus();
-        startPlayer();
+        //判断是否从头开始播放
+        if (!mStartPosition.equalsIgnoreCase("0")) {
+            mVideoView.seekTo(Long.valueOf(mStartPosition));
+            mVideoView.requestFocus();
+            startPlayer();
+        } else {
+            mVideoView.requestFocus();
+            startPlayer();
+        }
         mGestureDetector = new GestureDetector(this, new MyGestureListener());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }

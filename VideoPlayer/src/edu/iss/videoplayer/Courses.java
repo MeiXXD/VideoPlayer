@@ -105,6 +105,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             FlashViewVideo video = new FlashViewVideo();
+                            video.setId(jsonObject.getString("id"));
                             video.setImage(Constants.SERVER + jsonObject.getString("image"));
                             video.setLink(jsonObject.getString("link"));
                             int index = Integer.valueOf(jsonObject.getString("image_sort"));
@@ -132,6 +133,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject jsonObject = array.getJSONObject(i);
                             FlashViewVideo video = new FlashViewVideo();
+                            video.setId(jsonObject.getString("id"));
                             video.setImage(Constants.SERVER + jsonObject.getString("image"));
                             int index = Integer.valueOf(jsonObject.getString("image_sort"));
                             imageUrls.add(index - 1, Constants.SERVER + jsonObject.getString("image"));
@@ -205,6 +207,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
             Video temp = videoList.get(position - 1);
             Intent intent = new Intent();
             intent.setClass(Courses.this, VideoDetails.class);
+            intent.putExtra("id", temp.getId());
             intent.putExtra("imgurl", temp.getThumbnailUrl());
             intent.putExtra("link", temp.getPlayUrl());
             startActivity(intent);
@@ -217,6 +220,7 @@ public class Courses extends RoboActivity implements NetworkStateService.NetEven
             FlashViewVideo flashViewVideo = flashViewVideoList.get(position);
             Intent intent = new Intent();
             intent.setClass(Courses.this, VideoDetails.class);
+            intent.putExtra("id", flashViewVideo.getId());
             intent.putExtra("imgurl", flashViewVideo.getImage());
             intent.putExtra("link", flashViewVideo.getLink());
             startActivity(intent);

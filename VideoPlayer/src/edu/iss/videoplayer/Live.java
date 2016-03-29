@@ -125,6 +125,7 @@ public class Live extends RoboActivity implements NetworkStateService.NetEventHa
             Video temp = liveVideoList.get(position - 1);
             Intent intent = new Intent();
             intent.setClass(Live.this, VideoDetails.class);
+            intent.putExtra("id", temp.getId());
             intent.putExtra("imgurl", temp.getThumbnailUrl());
             intent.putExtra("link", temp.getPlayUrl());
             startActivity(intent);

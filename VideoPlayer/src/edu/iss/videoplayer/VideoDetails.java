@@ -39,10 +39,21 @@ public class VideoDetails extends RoboTabActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String imgurl = intent.getStringExtra("imgurl");
+        String id = intent.getStringExtra("id");
         playurl = intent.getStringExtra("link");
         videoimg.setImageUrl(imgurl, imageLoader);
         tabHost = getTabHost();
-        tabHost.addTab(tabHost.newTabSpec("comments").setIndicator("评论").setContent(new Intent(this, Comments.class)));
+        //章节tab
+        Intent chaptersIntent = new Intent();
+        chaptersIntent.setClass(VideoDetails.this, Chapters.class);
+        chaptersIntent.putExtra("id", id);
+        tabHost.addTab(tabHost.newTabSpec("chapter").setIndicator("章节").setContent(chaptersIntent));
+        //评论tab
+        Intent commentsIntent = new Intent();
+        commentsIntent.setClass(VideoDetails.this, Comments.class);
+        commentsIntent.putExtra("id", id);
+        tabHost.addTab(tabHost.newTabSpec("comments").setIndicator("评论").setContent(commentsIntent));
+        //笔记
         tabHost.addTab(tabHost.newTabSpec("notes").setIndicator("笔记").setContent(new Intent(this, Notes.class)));
 
         //初始化
