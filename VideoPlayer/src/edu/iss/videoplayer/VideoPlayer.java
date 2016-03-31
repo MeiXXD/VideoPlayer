@@ -1,13 +1,13 @@
 package edu.iss.videoplayer;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.*;
@@ -35,7 +35,6 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.layout_videoplayer)
 @SuppressLint("HandlerLeak")
 public class VideoPlayer extends RoboActivity implements OnCompletionListener, OnInfoListener {
-    private CalThread calThread;
     @InjectView(R.id.surface_view)
     private VideoView mVideoView;
     @InjectView(R.id.operation_bg)
@@ -50,6 +49,42 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
     private String mPath;
     @InjectExtra("StartPosition")
     private String mStartPosition;
+    @InjectExtra("Title")
+    private String mTitle;
+    @InjectExtra("Id")
+    private String mId;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO: 16/3/6  处理视频播放页面的一些按钮时间,包括返回,普清,高清
+            switch (msg.what) {
+                case 0x1:
+                    finish();
+                    break;
+                case 0x2:
+                    // TODO: 16/3/7 视频清晰度切换问题
+//                    mStartPosition = (Long) msg.obj;
+//                    long position = mStartPosition + 10000;
+//                    Log.d(">>>>>", String.valueOf(position));
+//                    mVideoView.changeDefinitionAndResume(position);
+                    break;
+                case 0x3:
+                    break;
+                case 0x4:
+                    //笔记message处理
+                    Bundle bundle = msg.getData();
+                    mStartPosition = String.valueOf(bundle.getLong("pos"));
+                    Intent intent = new Intent();
+                    intent.setClass(VideoPlayer.this, Notes.class);
+                    bundle.putString("id", mId);
+                    bundle.putString("playUrl", mPath);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                    break;
+            }
+        }
+    };
     private
     @Inject
     AudioManager mAudioManager;
@@ -89,7 +124,7 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.e("11111", "onCreate");
         Vitamio.isInitialized(this);
 
         //获取播放地址和标
@@ -101,22 +136,16 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
 
         //绑定数据
         mMaxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-
-        calThread = new CalThread();
-        // 启动新线程
-        calThread.start();
-
         //设置显示名称
-        mMediaController = new MediaController(this);
+        mMediaController = new MediaController(this, mHandler);
         mVideoView.setMediaController(mMediaController);
-        mMediaController.setVideoPlaperHandler(calThread.mHandler);
 
         if (mPath.startsWith("http:")) {
             mVideoView.setVideoURI(Uri.parse(mPath));
         } else {
             mVideoView.setVideoPath(mPath);
         }
-
+        mVideoView.setVideoTitle(mTitle);
         //判断是否从头开始播放
         if (!mStartPosition.equalsIgnoreCase("0")) {
             mVideoView.seekTo(Long.valueOf(mStartPosition));
@@ -133,22 +162,29 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
     @Override
     protected void onPause() {
         super.onPause();
-        if (mVideoView != null)
+        mStartPosition = String.valueOf(mVideoView.getCurrentPosition());
+        if (mVideoView != null) {
+            Log.e("11111", "onPause");
             mVideoView.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mVideoView != null)
+        if (mVideoView != null) {
+            Log.e("11111", "onResume");
             mVideoView.resume();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mVideoView != null)
+        if (mVideoView != null) {
+            Log.e("11111", "onDestroy");
             mVideoView.stopPlayback();
+        }
     }
 
     @Override
@@ -292,53 +328,7 @@ public class VideoPlayer extends RoboActivity implements OnCompletionListener, O
         return true;
     }
 
-    // 定义一个线程类
-    class CalThread extends Thread {
-        public Handler mHandler;
-
-        public void run() {
-            Looper.prepare();
-            mHandler = new Handler() {
-                // 定义处理消息的方法
-                @Override
-                public void handleMessage(Message msg) {
-                    // TODO: 16/3/6  处理视频播放页面的一些按钮时间,包括返回,普清,高清
-                    switch (msg.what) {
-                        case 0x1:
-                            finish();
-                            mVideoView.stopPlayback();
-                            break;
-                        case 0x2:
-                            // TODO: 16/3/7 视频清晰度切换问题
-//                            mStartPosition = (Long) msg.obj;
-//                            long position = mStartPosition + 10000;
-//                            Log.d(">>>>>", String.valueOf(position));
-//                            mVideoView.changeDefinitionAndResume(position);
-                            break;
-                        case 0x3:
-                            break;
-                    }
-                }
-            };
-            Looper.loop();
-        }
-    }
-
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-//        /** 双击 */
-//        @Override
-//        public boolean onDoubleTap(MotionEvent e) {
-//            mMediaController.hide();
-//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
-//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
-//            else
-//                mLayout++;
-//            if (mVideoView != null)
-//                mVideoView.setVideoLayout(mLayout, 0);
-//            return true;
-//        }
-
         /**
          * 滑动
          */

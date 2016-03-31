@@ -10,7 +10,14 @@
             android:id="@+id/btn_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/submit_notes"/>
+    <Button
+            android:id="@+id/submit_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:text="@string/submit_notes"
             android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

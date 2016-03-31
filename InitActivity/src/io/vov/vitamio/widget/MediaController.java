@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -70,6 +71,7 @@ public class MediaController extends FrameLayout {
     private static final int BACK = 3;
     private static final int HIGH_QUALITY = 4;
     private static final int LOW_QUALITY = 5;
+    private static final int TAKE_NOTES = 6;
     private MediaPlayerControl mPlayer;
     private Context mContext;
     private PopupWindow mWindow;
@@ -90,6 +92,7 @@ public class MediaController extends FrameLayout {
     private ImageButton mBackButton;
     private ImageButton mHighQualityButton;
     private ImageButton mLowQualityButton;
+    private ImageButton mTakeNotesButton;
     private AudioManager mAM;
     private OnShownListener mShownListener;
     private OnHiddenListener mHiddenListener;
@@ -133,6 +136,17 @@ public class MediaController extends FrameLayout {
                     mVideoPlaperHandler.sendMessage(message);
                     Log.d(">>>>>普清pos:" + String.valueOf(pos));
                     break;
+                case TAKE_NOTES:
+                    // TODO: 16/3/30 做笔记
+                    //mPlayer.pause();
+                    message.what = 0x4;
+                    pos = mPlayer.getCurrentPosition();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("pos", pos);
+                    bundle.putString("title", mTitle);
+                    message.setData(bundle);
+                    mVideoPlaperHandler.sendMessage(message);
+                    break;
             }
         }
     };
@@ -147,6 +161,14 @@ public class MediaController extends FrameLayout {
     private OnClickListener mBackListener = new OnClickListener() {
         public void onClick(View v) {
             mHandler.sendEmptyMessage(BACK);
+        }
+    };
+
+    //做笔记
+    private OnClickListener mTakeNotesListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mHandler.sendEmptyMessage(TAKE_NOTES);
         }
     };
 
@@ -217,14 +239,11 @@ public class MediaController extends FrameLayout {
         initController(context);
     }
 
-    public MediaController(Context context) {
+    public MediaController(Context context, Handler handler) {
         super(context);
+        mVideoPlaperHandler = handler;
         if (!mFromXml && initController(context))
             initFloatingWindow();
-    }
-
-    public void setVideoPlaperHandler(Handler videoPlaperHandler) {
-        this.mVideoPlaperHandler = videoPlaperHandler;
     }
 
     private boolean initController(Context context) {
@@ -308,6 +327,10 @@ public class MediaController extends FrameLayout {
         if (null != mLowQualityButton) {
             mLowQualityButton.setOnClickListener(mLowQualityListener);
         }
+        mTakeNotesButton = (ImageButton) v.findViewById(getResources().getIdentifier("take_note", "id", mContext.getPackageName()));
+        if (null != mTakeNotesButton) {
+            mTakeNotesButton.setOnClickListener(mTakeNotesListener);
+        }
         mProgress = (SeekBar) v.findViewById(getResources().getIdentifier("mediacontroller_seekbar", "id", mContext.getPackageName()));
         if (mProgress != null) {
             if (mProgress instanceof SeekBar) {
@@ -320,6 +343,7 @@ public class MediaController extends FrameLayout {
         mEndTime = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_time_total", "id", mContext.getPackageName()));
         mCurrentTime = (TextView) v.findViewById(getResources().getIdentifier("mediacontroller_time_current", "id", mContext.getPackageName()));
         mVideoName = (TextView) v.findViewById(getResources().getIdentifier("video_name", "id", mContext.getPackageName()));
+
         if (mVideoName != null)
             mVideoName.setText(mTitle);
     }

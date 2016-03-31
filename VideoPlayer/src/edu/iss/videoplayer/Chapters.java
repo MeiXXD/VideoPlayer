@@ -104,6 +104,7 @@ public class Chapters extends RoboActivity implements NetworkStateService.NetEve
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Chapter chapter = chapters.get(position - 1);
+            String videoId = chapter.getId();
             String link = chapter.getPlayUrl();
             String title = chapter.getTitle();
             String startAt = chapter.getStartTime();
@@ -112,6 +113,8 @@ public class Chapters extends RoboActivity implements NetworkStateService.NetEve
             intent.setClass(Chapters.this, VideoPlayer.class);
             intent.putExtra("Path", link);
             intent.putExtra("StartPosition", startAt);
+            intent.putExtra("Title", title);
+            intent.putExtra("Id", videoId);
             startActivity(intent);
         }
     }

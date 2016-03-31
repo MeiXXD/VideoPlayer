@@ -53,9 +53,6 @@ public class VideoDetails extends RoboTabActivity {
         commentsIntent.setClass(VideoDetails.this, Comments.class);
         commentsIntent.putExtra("id", id);
         tabHost.addTab(tabHost.newTabSpec("comments").setIndicator("评论").setContent(commentsIntent));
-        //笔记
-        tabHost.addTab(tabHost.newTabSpec("notes").setIndicator("笔记").setContent(new Intent(this, Notes.class)));
-
         //初始化
         updateTab(tabHost);
         //绑定监听器

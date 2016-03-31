@@ -9,8 +9,8 @@ package edu.iss.videoplayer;
  */
 public class Constants {
     //服务器地址
-    //public static final String SERVER = "http://121.40.186.28:8089/mediaResource/";
-    public static final String SERVER = "http://192.168.11.41/mediaResource/";
+    public static final String SERVER = "http://121.40.186.28:8089/mediaResource/";
+    //public static final String SERVER = "http://192.168.11.41/mediaResource/";
 
     //轮播地址
     public static final String FLASHVIEW = "app/index/getCarousel";

@@ -40,7 +40,6 @@ import io.vov.vitamio.utils.ScreenResolution;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,6 +68,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
     private static final int STATE_SUSPEND = 6;
     private static final int STATE_RESUME = 7;
     private static final int STATE_SUSPEND_UNSUPPORTED = 8;
+    private String mTitle;
     private Uri mUri;
     private long mDuration;
     private int mCurrentState = STATE_IDLE;
@@ -390,6 +390,10 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         setVideoURI(Uri.parse(path));
     }
 
+    public void setVideoTitle(String title) {
+        mTitle = title;
+    }
+
     public void setVideoURI(Uri uri) {
         setVideoURI(uri, null);
     }
@@ -497,11 +501,11 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
             mMediaController.setAnchorView(anchorView);
             mMediaController.setEnabled(isInPlaybackState());
 
-            if (mUri != null) {
-                List<String> paths = mUri.getPathSegments();
-                String name = paths == null || paths.isEmpty() ? "null" : paths.get(paths.size() - 1);
-                mMediaController.setFileName(name);
-            }
+//            if (mUri != null) {
+//                List<String> paths = mUri.getPathSegments();
+//                String name = paths == null || paths.isEmpty() ? "null" : paths.get(paths.size() - 1);
+            mMediaController.setFileName(mTitle);
+//            }
         }
     }
 
@@ -625,6 +629,7 @@ public class VideoView extends SurfaceView implements MediaController.MediaPlaye
         }
     }
 
+    // TODO: 16/3/30 无法直接恢复到原始位置开始播放 
     public void resume() {
         if (mSurfaceHolder == null && mCurrentState == STATE_SUSPEND) {
             mTargetState = STATE_RESUME;
