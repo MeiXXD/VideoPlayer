@@ -6,6 +6,36 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="8dp">
 
+    <!-- 做笔记的视频标题 -->
+    <EditText
+            android:id="@+id/note_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dip"
+            android:textSize="@dimen/title"
+            android:hint="@string/hint_note_content"
+            android:layout_above="@+id/note_video_itle"/>
+    <!-- 做笔记的视频标题 -->
+    <TextView
+            android:id="@+id/note_video_itle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title"
+            android:layout_marginTop="10dip"
+            android:textStyle="bold"
+            android:layout_above="@+id/note_time"/>
+
+    <!-- 做笔记的时间点 -->
+    <TextView
+            android:id="@+id/note_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:textSize="@dimen/rating"
+            android:layout_above="@+id/btn_record"
+            android:layout_marginBottom="150dp"/>
+
     <edu.iss.videoplayer.recoder.RecordButton
             android:id="@+id/btn_record"
             android:layout_width="match_parent"

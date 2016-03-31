@@ -20,4 +20,6 @@ public class Constants {
 
     //视频详情章节地址
     public static final String CHAPTERS = "app/index/getCourseIndex/id/";
+    //笔记上传地址
+    public static final String UPLOADNOTES = "app/index/getnote";
 }

@@ -8,6 +8,7 @@
     <string name="categories">分类</string>
     <string name="back_live">返回</string>
     <string name="video_description">视频描述</string>
+    <string name="hint_note_content">文字笔记</string>
     <string name="video_name">视频名</string>
     <string name="video_length">视频长度</string>
     <string name="submit_notes">提交笔记</string>
