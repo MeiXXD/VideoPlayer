@@ -2,6 +2,8 @@ package edu.iss.videoplayer.recoder;
 
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.Handler;
+import edu.iss.videoplayer.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +17,21 @@ import java.util.Date;
  * Time: 09:39
  */
 public class AudioRecorder implements RecordStrategy {
+    //录音状态标识
+    private static final int RECORE_READY = 1;
+    private static final int RECORE_STOP = 2;
+    private Handler handler;
     private MediaRecorder recorder;
     private String fileName;
     private String fileFolder = Environment.getExternalStorageDirectory()
-            .getPath() + "/TestRecord";
+            .getPath() + Constants.VOICE_NOTE_DIRECTORY;
 
     private boolean isRecording = false;
+
+    public AudioRecorder(Handler handler) {
+        this.handler = handler;
+        handler.sendEmptyMessage(RECORE_READY);
+    }
 
     //录音的准备工作
     @Override
@@ -50,6 +61,7 @@ public class AudioRecorder implements RecordStrategy {
     public void start() {
         if (!isRecording) {
             try {
+                //录音开始发消息
                 recorder.prepare();
                 recorder.start();
             } catch (IllegalStateException e) {
@@ -67,6 +79,8 @@ public class AudioRecorder implements RecordStrategy {
     @Override
     public void stop() {
         if (isRecording) {
+            //成功录音发消息
+            handler.sendEmptyMessage(RECORE_STOP);
             recorder.stop();
             recorder.release();
             isRecording = false;

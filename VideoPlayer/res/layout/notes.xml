@@ -6,7 +6,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="8dp">
 
-    <!-- 做笔记的视频标题 -->
+    <!-- 文字笔记编辑框 -->
     <EditText
             android:id="@+id/note_content"
             android:layout_width="fill_parent"
@@ -15,10 +15,20 @@
             android:layout_marginTop="5dip"
             android:textSize="@dimen/title"
             android:hint="@string/hint_note_content"
-            android:layout_above="@+id/note_video_itle"/>
+            android:layout_above="@+id/voice_note_info"/>
+    <TextView
+            android:id="@+id/voice_note_info"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:textSize="@dimen/title"
+            android:layout_marginTop="10dip"
+            android:textStyle="bold"
+            android:hint="@string/take_note"
+            android:gravity="center_vertical"
+            android:layout_above="@+id/note_video_title"/>
     <!-- 做笔记的视频标题 -->
     <TextView
-            android:id="@+id/note_video_itle"
+            android:id="@+id/note_video_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title"

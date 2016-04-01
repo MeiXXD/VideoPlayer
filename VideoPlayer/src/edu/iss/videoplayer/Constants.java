@@ -8,6 +8,8 @@ package edu.iss.videoplayer;
  * Description: 常量类
  */
 public class Constants {
+    //语音笔记目录
+    public static final String VOICE_NOTE_DIRECTORY = "/TestRecord";
     //服务器地址
     public static final String SERVER = "http://121.40.186.28:8089/mediaResource/";
     //public static final String SERVER = "http://192.168.11.41/mediaResource/";
@@ -20,6 +22,8 @@ public class Constants {
 
     //视频详情章节地址
     public static final String CHAPTERS = "app/index/getCourseIndex/id/";
-    //笔记上传地址
-    public static final String UPLOADNOTES = "app/index/getnote";
+    //笔记提交地址
+    public static final String COMMITNOTES = "app/index/getnote";
+    //上传接口
+    public static final String UPLOADAMRFILE = "app/index/uploader";
 }
