@@ -1,7 +1,5 @@
-# VideoPlayer
-视频播放器
-
-第一版完成，下周开始写论文。
+# VideoPlayer 视频播放器
+>注：InitActivity和PullToRefresh作为Library供VideoPlayer使用
 
 ---
 ###具体包括：
@@ -12,3 +10,5 @@
 ####robo injectview的使用
 ####录音功能的实现（仿照微信）
 ####常见播放器的功能实现：查询，分类，播放，笔记（文字、语音笔记以及上传实现），评论，相关，搜索等功能
+
+第一版完成，下周开始写论文。
