@@ -15,7 +15,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -49,8 +48,7 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
     //获取评论地址
     private static final String GET_COMMENTS = Constants.SERVER + Constants.COMMENTS;
     //提交评论地址
-    // TODO: 16/4/2  地址不完整
-    private static final String URL_SUBMIT_COMMENT = Constants.SERVER;
+    private static final String URL_SUBMIT_COMMENT = Constants.SERVER + Constants.SUBMIT_COMMENTS;
     //提交是否成功
     private static boolean isSubmitSuccess = false;
     @InjectView(R.id.commentslist)
@@ -71,7 +69,7 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
         NetworkStateService.ehList.add(this);
         //刷新设置
         if (NetworkUtils.isNetworkConnected(getApplicationContext())) {
-            commentslist.setMode(PullToRefreshBase.Mode.BOTH);
+            commentslist.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         } else {
             commentslist.setMode(PullToRefreshBase.Mode.DISABLED);
         }
@@ -86,10 +84,11 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
     private void commentslistInit(String id) {
         adapter = new CommentListAdapter(this, comments);
         commentslist.setAdapter(adapter);
-        final JsonObjectRequest request = new JsonObjectRequest(GET_COMMENTS + id, null, new Response.Listener<JSONObject>() {
+        final StringRequest request = new StringRequest(Request.Method.GET, GET_COMMENTS + id, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) throws JSONException {
-                JsonUtils.JSONObjectTOCommentList(response, comments);
+            public void onResponse(String response) throws JSONException {
+                JSONObject object = new JSONObject(response.toString());
+                JsonUtils.JSONObjectTOCommentList(object, comments);
                 adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
@@ -106,7 +105,7 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
         switch (netCode) {
             case NETWORK_MOBILE:
             case NETWORK_WIFI:
-                commentslist.setMode(PullToRefreshBase.Mode.BOTH);
+                commentslist.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                 break;
             default:
                 commentslist.setMode(PullToRefreshBase.Mode.DISABLED);
@@ -133,9 +132,9 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<String, String>();
-                map.put("id", bundle.getString("id"));
+                map.put("course_id", bundle.getString("id"));
                 map.put("user_id", bundle.getString("user_id"));
-                map.put("comment", bundle.getString("comment"));
+                map.put("comments", bundle.getString("comment"));
                 return map;
             }
         };
@@ -149,7 +148,6 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
         @Override
         public void onClick(View v) {
             String temp = comment.getText().toString().trim();
-            // TODO: 16/4/2 评论提交
             Bundle bundle = new Bundle();
             bundle.putString("id", video_id);
             bundle.putString("comment", temp);
@@ -164,13 +162,9 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if (isSubmitSuccess == true) {
-                if (comments.size() != 0) {
-                    comments.clear();
-                }
-                commentslistInit(video_id);
-            }
             isSubmitSuccess = false;
+            comment.setText("");
+            Toast.makeText(Comments.this, "评论成功,刷新试试", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -188,13 +182,13 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
                 String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-                comments.clear();
-                final JsonObjectRequest request = new JsonObjectRequest(GET_COMMENTS + video_id, null, new Response.Listener<JSONObject>() {
+                final StringRequest request = new StringRequest(Request.Method.GET, GET_COMMENTS + video_id, new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) throws JSONException {
-                        JsonUtils.JSONObjectTOCommentList(response, comments);
-                        adapter.notifyDataSetChanged();
+                    public void onResponse(String response) throws JSONException {
+                        JSONObject object = new JSONObject(response.toString());
+                        JsonUtils.JSONObjectTOCommentList(object, comments);
                         commentslist.onRefreshComplete();
+                        adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -213,5 +207,4 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
 
         }
     }
-
 }

@@ -1,14 +1,27 @@
 package edu.iss.videoplayer;
 
+import activity.listview.adater.CategoryListAdapter;
+import activity.listview.app.AppController;
+import activity.listview.model.Category;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.TextView;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import edu.iss.videoplayer.utils.JsonUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA
@@ -19,73 +32,47 @@ import roboguice.inject.InjectView;
  */
 @ContentView(R.layout.categories)
 public class Categories extends RoboActivity {
+    //分类的网址
+    private static final String URL_CATEGORIES = Constants.SERVER + Constants.CATEGORIES;
 
     @InjectView(R.id.back)
     private ImageButton back;
     @InjectView(R.id.search_in_categories)
     private ImageButton searchincategories;
-    @InjectView(R.id.all_courses)
-    private Button allcourses;
-    @InjectView(R.id.htmlcss)
-    private Button htmlcss;
-    @InjectView(R.id.jquery)
-    private Button jquery;
-    @InjectView(R.id.html5)
-    private Button html5;
-    @InjectView(R.id.nodejs)
-    private Button nodejs;
-    @InjectView(R.id.webapp)
-    private Button webapp;
-    @InjectView(R.id.php)
-    private Button php;
-    @InjectView(R.id.javascript)
-    private Button javascript;
-    @InjectView(R.id.java)
-    private Button java;
-    @InjectView(R.id.c)
-    private Button c;
-    @InjectView(R.id.cpp)
-    private Button cpp;
-    @InjectView(R.id.go)
-    private Button go;
-    @InjectView(R.id.csharp)
-    private Button csharp;
+    @InjectView(R.id.categorieslist)
+    private PullToRefreshListView categorieslist;
+    private ArrayList<Category> categoryArrayList = new ArrayList<Category>();
+    private CategoryListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         back.setOnClickListener(new BackOnClickListener());
         searchincategories.setOnClickListener(new SearchInCategoriesOnClickListener());
-        setBtnOnClickListener();
+        categorieslist.setMode(PullToRefreshBase.Mode.DISABLED);
+        categorieslist.setOnItemClickListener(new ItemClickListener());
+        categorieslistInit();
     }
 
-    private void setBtnOnClickListener() {
-        allcourses.setOnClickListener(new ButtonOnClickListener());
-        allcourses.setTag(1);
-        htmlcss.setOnClickListener(new ButtonOnClickListener());
-        htmlcss.setTag(2);
-        jquery.setOnClickListener(new ButtonOnClickListener());
-        jquery.setTag(3);
-        html5.setOnClickListener(new ButtonOnClickListener());
-        html5.setTag(4);
-        nodejs.setOnClickListener(new ButtonOnClickListener());
-        nodejs.setTag(5);
-        webapp.setOnClickListener(new ButtonOnClickListener());
-        webapp.setTag(6);
-        php.setOnClickListener(new ButtonOnClickListener());
-        php.setTag(7);
-        javascript.setOnClickListener(new ButtonOnClickListener());
-        javascript.setTag(8);
-        java.setOnClickListener(new ButtonOnClickListener());
-        java.setTag(9);
-        c.setOnClickListener(new ButtonOnClickListener());
-        c.setTag(10);
-        cpp.setOnClickListener(new ButtonOnClickListener());
-        cpp.setTag(11);
-        go.setOnClickListener(new ButtonOnClickListener());
-        go.setTag(12);
-        csharp.setOnClickListener(new ButtonOnClickListener());
-        csharp.setTag(13);
+    /**
+     * 分类列表初始化
+     */
+    private void categorieslistInit() {
+        adapter = new CategoryListAdapter(this, categoryArrayList);
+        categorieslist.setAdapter(adapter);
+        final JsonObjectRequest request = new JsonObjectRequest(URL_CATEGORIES, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) throws JSONException {
+                JsonUtils.JSONObjectTOCategoriesList(response, categoryArrayList);
+                adapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        AppController.getInstance().addToRequestQueue(request);
     }
 
     class BackOnClickListener implements View.OnClickListener {
@@ -104,51 +91,16 @@ public class Categories extends RoboActivity {
         }
     }
 
-    class ButtonOnClickListener implements View.OnClickListener {
+    private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
-        public void onClick(View v) {
-            int tag = (Integer) v.getTag();
-            switch (tag) {
-                case 1://allcourses
-                    Toast.makeText(Categories.this, "全部课程", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2://htmlcss
-                    Toast.makeText(Categories.this, "HTML/CSS", Toast.LENGTH_SHORT).show();
-                    break;
-                case 3://jquery
-                    Toast.makeText(Categories.this, "JQuery", Toast.LENGTH_SHORT).show();
-                    break;
-                case 4://html5
-                    Toast.makeText(Categories.this, "HTML5", Toast.LENGTH_SHORT).show();
-                    break;
-                case 5://nodejs
-                    Toast.makeText(Categories.this, "Node.js", Toast.LENGTH_SHORT).show();
-                    break;
-                case 6://webapp
-                    Toast.makeText(Categories.this, "WebApp", Toast.LENGTH_SHORT).show();
-                    break;
-                case 7://php
-                    Toast.makeText(Categories.this, "PHP", Toast.LENGTH_SHORT).show();
-                    break;
-                case 8://javascript
-                    Toast.makeText(Categories.this, "JavaScript", Toast.LENGTH_SHORT).show();
-                    break;
-                case 9://java
-                    Toast.makeText(Categories.this, "JAVA", Toast.LENGTH_SHORT).show();
-                    break;
-                case 10://c
-                    Toast.makeText(Categories.this, "C", Toast.LENGTH_SHORT).show();
-                    break;
-                case 11://cpp
-                    Toast.makeText(Categories.this, "C++", Toast.LENGTH_SHORT).show();
-                    break;
-                case 12://go
-                    Toast.makeText(Categories.this, "GO", Toast.LENGTH_SHORT).show();
-                    break;
-                case 13://csharp
-                    Toast.makeText(Categories.this, "C#", Toast.LENGTH_SHORT).show();
-                    break;
-            }
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            TextView textView = (TextView) view.findViewById(R.id.category);
+            Category category = categoryArrayList.get(position - 1);
+            Intent intent = new Intent();
+            intent.putExtra("id", category.getId());
+            intent.putExtra("category", textView.getText());
+            intent.setClass(Categories.this, CategoryResult.class);
+            startActivity(intent);
         }
     }
 }

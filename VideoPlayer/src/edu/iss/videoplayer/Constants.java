@@ -19,15 +19,23 @@ public class Constants {
     //首页视频列表地址
     public static final String VIDEOLISTVIEW = "app/index/getCourse/page/";
     //直播视频列表地址
-
+    //public static final String VIDEOLISTVIEW = "app/index/getCourse/page/";
     //视频详情章节地址
     public static final String CHAPTERS = "app/index/getCourseIndex/id/";
     //获取评论
-    public static final String COMMENTS = "app/index/getComments/id/";
+    public static final String COMMENTS = "app/index/getCourseComments/id/";
+    //评论提交接口
+    public static final String SUBMIT_COMMENTS = "app/index/getComments";
     //笔记提交地址
     public static final String COMMITNOTES = "app/index/getnote";
     //上传接口
     public static final String UPLOADAMRFILE = "app/index/uploader";
     //视频详情,相关课程接口
     public static final String DETAILS = "app/index/getCourseDetails/id/";
+    //视频分类接口
+    public static final String CATEGORIES = "app/index/getCategory";
+    //分类视频查询接口
+    public static final String CATEGORY_RESULT = "app/index/getCategoryCourse/id/";
+    //搜索视频接口
+    public static final String SEARCH_VIDEO = "app/index/searchCourse/key/";
 }

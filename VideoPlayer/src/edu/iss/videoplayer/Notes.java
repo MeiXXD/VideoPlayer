@@ -347,14 +347,14 @@ public class Notes extends RoboActivity {
     private class DismissListener implements DialogInterface.OnDismissListener {
         @Override
         public void onDismiss(DialogInterface dialog) {
-//            Intent intent = new Intent();
-//            intent.setClass(Notes.this, VideoPlayer.class);
-//            intent.putExtra("Path", playUrl);
-//            intent.putExtra("StartPosition", pos);
-//            intent.putExtra("Title", title);
-//            intent.putExtra("Id", id);
-//            startActivity(intent);
-//            finish();
+            Intent intent = new Intent();
+            intent.setClass(Notes.this, VideoPlayer.class);
+            intent.putExtra("Path", playUrl);
+            intent.putExtra("StartPosition", pos);
+            intent.putExtra("Title", title);
+            intent.putExtra("Id", id);
+            startActivity(intent);
+            finish();
         }
     }
 

@@ -1,5 +1,6 @@
 package edu.iss.videoplayer.utils;
 
+import activity.listview.model.Category;
 import activity.listview.model.Chapter;
 import activity.listview.model.Comment;
 import activity.listview.model.Video;
@@ -78,12 +79,14 @@ public class JsonUtils {
             if (jsonObject.getString("flag").equalsIgnoreCase("Success")) {
                 JSONArray array = jsonObject.getJSONArray("data");
                 for (int i = 0; i < array.length(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-                    Comment comment = new Comment();
-                    comment.setComment(object.getString("comments"));
-                    // TODO: 16/4/2 等待服务器添加 UserName 字段
-                    comment.setUserName("机器人:");
-                    list.add(comment);
+                    JSONArray temp = array.getJSONArray(i);
+                    for (int j = 0; j < temp.length(); j++) {
+                        JSONObject object = temp.getJSONObject(j);
+                        Comment comment = new Comment();
+                        comment.setComment(object.getString("comments"));
+                        comment.setUserName(object.getString("username") + ":");
+                        list.add(comment);
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -91,6 +94,7 @@ public class JsonUtils {
         }
     }
 
+    //相关课程的解析
     public static final void JSONObjectTORelatedCourseList(JSONObject jsonObject, ArrayList<Video> relatedVideoList) {
         relatedVideoList.clear();
         try {
@@ -106,6 +110,51 @@ public class JsonUtils {
                     video.setUpdate_course(object.getString("update_course"));
                     video.setCrt(object.getString("crt"));
                     relatedVideoList.add(video);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //分类列表的解析
+    public static final void JSONObjectTOCategoriesList(JSONObject jsonObject, ArrayList<Category> categoryArrayList) {
+        try {
+            if (jsonObject.getString("flag").equalsIgnoreCase("Success")) {
+                JSONArray array = jsonObject.getJSONArray("data");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    Category category = new Category();
+                    category.setId(object.getString("id"));
+                    category.setName(object.getString("title"));
+                    categoryArrayList.add(category);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 分类和搜索json结果解析
+     *
+     * @param jsonObject
+     * @param list
+     */
+    public static final void JSONObjectTOCategoryResultList(JSONObject jsonObject, ArrayList<Video> list) {
+        try {
+            if (jsonObject.getString("flag").equalsIgnoreCase("Success")) {
+                JSONArray array = jsonObject.getJSONArray("data");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    Video video = new Video();
+                    video.setId(object.getString("id"));
+                    video.setThumbnailUrl(Constants.SERVER + object.getString("image"));
+                    video.setPlayUrl(object.getString("link"));
+                    video.setTitle(object.getString("title"));
+                    video.setUpdate_course(object.getString("update_course"));
+                    video.setCrt(object.getString("crt"));
+                    list.add(video);
                 }
             }
         } catch (JSONException e) {

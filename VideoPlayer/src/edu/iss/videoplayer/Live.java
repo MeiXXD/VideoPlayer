@@ -169,7 +169,6 @@ public class Live extends RoboActivity implements NetworkStateService.NetEventHa
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 //加载更多
                 if (!isEnd) {
-                    // Update the LastUpdatedLabel
                     refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
                     ++page;
                     final JsonObjectRequest request = new JsonObjectRequest(videoListViewUrl + String.valueOf(page), null, new Response.Listener<JSONObject>() {
