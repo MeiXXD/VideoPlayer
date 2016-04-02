@@ -3,16 +3,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-            android:background="@android:color/holo_red_light"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:text="@string/live"
-            android:textSize="30dp"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-            android:id="@+id/livelist"
+            android:id="@+id/relate_course_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="@color/list_divider"
@@ -23,5 +15,4 @@
             android:headerDividersEnabled="false"
             android:smoothScrollbar="true"
             android:listSelector="@drawable/list_row_selector"/>
-
 </LinearLayout>

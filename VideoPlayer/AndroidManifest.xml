@@ -50,6 +50,7 @@
         <activity android:name=".Chapters"></activity>
         <activity android:name=".Comments"></activity>
         <activity android:name=".Notes"></activity>
+        <activity android:name=".RelateCourses"></activity>
         <activity android:name=".VideoDetails"></activity>
         <activity android:name=".VideoPlayer"
                   android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"

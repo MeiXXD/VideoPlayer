@@ -1,6 +1,7 @@
 package edu.iss.videoplayer.utils;
 
 import activity.listview.model.Chapter;
+import activity.listview.model.Comment;
 import activity.listview.model.Video;
 import edu.iss.videoplayer.Constants;
 import org.json.JSONArray;
@@ -63,6 +64,48 @@ public class JsonUtils {
                         chapter.setStartTime(temp.getString("start_at"));
                         list.add(chapter);
                     }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //json解析评论信息
+    public static final void JSONObjectTOCommentList(JSONObject jsonObject, ArrayList<Comment> list) {
+        list.clear();
+        try {
+            if (jsonObject.getString("flag").equalsIgnoreCase("Success")) {
+                JSONArray array = jsonObject.getJSONArray("data");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    Comment comment = new Comment();
+                    comment.setComment(object.getString("comments"));
+                    // TODO: 16/4/2 等待服务器添加 UserName 字段
+                    comment.setUserName("机器人:");
+                    list.add(comment);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static final void JSONObjectTORelatedCourseList(JSONObject jsonObject, ArrayList<Video> relatedVideoList) {
+        relatedVideoList.clear();
+        try {
+            if (jsonObject.getString("flag").equalsIgnoreCase("Success")) {
+                JSONArray array = jsonObject.getJSONObject("data").getJSONArray("relate_course");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    Video video = new Video();
+                    video.setId(object.getString("id"));
+                    video.setThumbnailUrl(Constants.SERVER + object.getString("image"));
+                    video.setPlayUrl(object.getString("link"));
+                    video.setTitle(object.getString("title"));
+                    video.setUpdate_course(object.getString("update_course"));
+                    video.setCrt(object.getString("crt"));
+                    relatedVideoList.add(video);
                 }
             }
         } catch (JSONException e) {

@@ -41,14 +41,6 @@
                     android:src="@drawable/icon"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"/>
-            <ImageButton android:layout_width="150dp"
-                         android:layout_height="40dp"
-                         android:id="@+id/video_play"
-                         android:src="@drawable/icon"
-                         android:layout_alignLeft="@id/video_img"
-                         android:layout_below="@id/video_img"
-                         android:layout_alignRight="@id/video_img"
-                         android:layout_marginTop="5dp"/>
             <TextView
                     android:id="@+id/video_name"
                     android:layout_width="wrap_content"
@@ -60,24 +52,16 @@
                     android:layout_marginRight="10dp"
                     android:layout_alignTop="@id/video_img"/>
             <TextView
-                    android:id="@+id/video_author"
+                    android:id="@+id/video_length"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/video_author"
+                    android:hint="@string/video_length"
                     android:layout_below="@id/video_name"
                     android:layout_alignLeft="@id/video_name"
                     android:layout_marginTop="5dp"
                     android:layout_alignRight="@id/video_name"/>
             <TextView
-                    android:id="@+id/video_length"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/video_length"
-                    android:layout_below="@id/video_author"
-                    android:layout_alignLeft="@id/video_author"
-                    android:layout_marginTop="5dp"
-                    android:layout_alignRight="@id/video_author"/>
-            <TextView
+                    android:id="@+id/video_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/video_description"
@@ -85,7 +69,7 @@
                     android:layout_alignLeft="@id/video_length"
                     android:layout_marginTop="5dp"
                     android:layout_alignRight="@id/video_length"
-                    android:layout_alignBottom="@id/video_play"/>
+                    android:layout_alignBottom="@id/video_img"/>
         </RelativeLayout>
 
         <TabHost

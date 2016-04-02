@@ -22,8 +22,12 @@ public class Constants {
 
     //视频详情章节地址
     public static final String CHAPTERS = "app/index/getCourseIndex/id/";
+    //获取评论
+    public static final String COMMENTS = "app/index/getComments/id/";
     //笔记提交地址
     public static final String COMMITNOTES = "app/index/getnote";
     //上传接口
     public static final String UPLOADAMRFILE = "app/index/uploader";
+    //视频详情,相关课程接口
+    public static final String DETAILS = "app/index/getCourseDetails/id/";
 }

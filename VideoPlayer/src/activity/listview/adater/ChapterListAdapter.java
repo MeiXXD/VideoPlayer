@@ -56,7 +56,7 @@ public class ChapterListAdapter extends BaseAdapter {
 
         Chapter chapter = chapterItems.get(position);
         title.setText(chapter.getTitle());
-        length.setText("时长:" + chapter.getLength());
+        length.setText("时长: " + chapter.getLength());
 
         return convertView;
     }

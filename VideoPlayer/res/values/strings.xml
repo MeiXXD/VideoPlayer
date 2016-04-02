@@ -12,9 +12,11 @@
     <string name="video_name">视频名</string>
     <string name="video_length">视频长度</string>
     <string name="submit_notes">提交笔记</string>
+    <string name="submit_comment">提交</string>
     <string name="video_author">作者</string>
     <string name="video_layout_loading">加载中</string>
     <string name="take_note">语音笔记</string>
+    <string name="live">直播</string>
     <string name="categories_activity">Categories界面</string>
     <string name="search_activity">Search界面</string>
     <string name="all_courses">全部课程</string>

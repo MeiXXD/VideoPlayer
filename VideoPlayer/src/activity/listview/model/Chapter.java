@@ -1,5 +1,8 @@
 package activity.listview.model;
 
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 /**
  * Created by IntelliJ IDEA
  * Author: lifeng
@@ -67,6 +70,8 @@ public class Chapter {
     }
 
     public void setLength(String length) {
-        this.length = length;
+        //初始化Formatter的转换格式
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        this.length = formatter.format(Long.valueOf(length) - TimeZone.getDefault().getRawOffset());
     }
 }

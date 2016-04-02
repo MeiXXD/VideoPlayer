@@ -28,9 +28,11 @@ import roboguice.inject.InjectView;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by IntelliJ IDEA
@@ -141,7 +143,8 @@ public class Notes extends RoboActivity {
         id = bundle.getString("id");
         playUrl = bundle.getString("playUrl");
         notevideotitle.setText(title);
-        notetime.setText("于 " + pos + " 毫秒添加笔记");
+        String time = new SimpleDateFormat("HH:mm:ss").format(Long.valueOf(pos) - TimeZone.getDefault().getRawOffset());
+        notetime.setText("于 " + time + " 添加笔记");
         submitnotes.setOnClickListener(new SubmitNotesOnClickListener());
     }
 
