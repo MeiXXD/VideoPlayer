@@ -82,6 +82,8 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
      * 评论列表初始化
      */
     private void commentslistInit(String id) {
+        if (comments.size() != 0)
+            comments.clear();
         adapter = new CommentListAdapter(this, comments);
         commentslist.setAdapter(adapter);
         final StringRequest request = new StringRequest(Request.Method.GET, GET_COMMENTS + id, new Response.Listener<String>() {
@@ -164,7 +166,8 @@ public class Comments extends RoboActivity implements NetworkStateService.NetEve
             super.onPostExecute(aVoid);
             isSubmitSuccess = false;
             comment.setText("");
-            Toast.makeText(Comments.this, "评论成功,刷新试试", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Comments.this, "评论成功", Toast.LENGTH_SHORT).show();
+            commentslistInit(video_id);
         }
 
         @Override
